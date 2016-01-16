@@ -12,12 +12,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+
+import java.util.Arrays;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,14 +43,27 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
         try {
             loginButton = (LoginButton) findViewById(R.id.login_button);
+            loginButton.setReadPermissions(Arrays.asList("user_friends"));
+
         }
         catch(Exception e)
         {
 
         }
-        int x = loginButton.length();
+
+        //detect if they are already logged in
+        boolean loggedIn = AccessToken.getCurrentAccessToken() != null;
+        if(loggedIn)
+        {
+            Intent intent = new Intent(getApplicationContext(), MyProfile.class);
+            intent.putExtra("user_id", AccessToken.getCurrentAccessToken().getUserId());
+            intent.putExtra("auth", AccessToken.getCurrentAccessToken().getToken());
+            startActivity(intent);
+        }
 
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -70,6 +87,9 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
+
 
 
         /*

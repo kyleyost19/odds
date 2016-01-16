@@ -1,5 +1,7 @@
 package com.example.kyle.firstpick;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,8 +27,7 @@ public class FindFriends extends AppCompatActivity {
         setContentView(R.layout.activity_find_friends);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        final LinearLayout linearLayout = new LinearLayout(this);
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.scroller);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -38,9 +39,17 @@ public class FindFriends extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //get intent and determine what they are doing
+        //looking at friends profiles OR picking friend to challenge
+        Intent intent = getIntent();
+        //if(intent.getStringExtra("type") == "challenge")
+        //{
+            TextView intentMessage = new TextView(getApplicationContext());
+            intentMessage.setText("Find a Friend to Challenge");
+            linearLayout.addView(intentMessage);
+        //}
 
-
-
+/*
         new GraphRequest(
                 AccessToken.getCurrentAccessToken(), "/me/friends", null, HttpMethod.GET,
 
@@ -67,5 +76,43 @@ public class FindFriends extends AppCompatActivity {
                     }
                 }
         ).executeAsync();
+        */
+
+
+
+        new GraphRequest(
+                AccessToken.getCurrentAccessToken(),
+                "/me/taggable_friends?limit=500",
+                null,
+                HttpMethod.GET,
+                new GraphRequest.Callback() {
+                    public void onCompleted(GraphResponse response) {
+                        /* handle the result */
+
+                       // JSONObject json = new response.getJSONObject();
+                        JSONObject result = response.getJSONObject();
+                        try
+                        {
+                            JSONArray res = result.getJSONArray("data");
+                            LinearLayout linlay = (LinearLayout) findViewById(R.id.scroller);
+                            linlay.setBackgroundColor(Color.TRANSPARENT);
+
+                            //iterate over result set of facebook friends to show
+                            for (int x = 0; x < res.length(); x++) {
+                                TextView textView = new TextView(FindFriends.this);
+                                JSONObject temp = res.getJSONObject(x);
+                                String name = temp.getString("name");
+                                textView.setText(name);
+                                linlay.addView(textView);
+                            }
+                        }
+                        catch(Exception e)
+                        {
+
+                        }
+                    }
+                }
+        ).executeAsync();
+
     }
 }
