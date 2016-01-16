@@ -31,9 +31,14 @@ public class MainActivity extends AppCompatActivity {
 
         //init facebook sdk stuff
         FacebookSdk.sdkInitialize(getApplicationContext());
+        FacebookSdk.setApplicationId("687770251360347");
 
         //create callback
         callbackManager = CallbackManager.Factory.create();
+
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         try {
             loginButton = (LoginButton) findViewById(R.id.login_button);
         }
@@ -41,10 +46,7 @@ public class MainActivity extends AppCompatActivity {
         {
 
         }
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
+        int x = loginButton.length();
 
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
