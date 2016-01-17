@@ -1,12 +1,18 @@
 package com.example.kyle.firstpick;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
+
+import java.net.URL;
 
 public class MyProfile extends AppCompatActivity {
 
@@ -28,21 +34,41 @@ public class MyProfile extends AppCompatActivity {
             }
         });
 
+        //allow image on main thread
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+
         //receive intentfrom the thing could be login
         Intent intent = getIntent();
         if(intent != null)
         {
-            String user_id = intent.getStringExtra("user_id");
+            final String user_id = intent.getStringExtra("user_id");
             String auth = intent.getStringExtra("auth");
 
-            //use this data to get user record from database and
-            //
+
+            try {
+                URL imageURL = new URL("https://graph.facebook.com/" + user_id + "/picture?type=large");
+                Bitmap pic = BitmapFactory.decodeStream(imageURL.openConnection().getInputStream());
+                ImageView img = (ImageView) findViewById(R.id.pro_pic);
+                img.setImageBitmap(pic);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
         }
 
 
 
-
+            //use this data to get user record from database and
+            //
     }
+
+
+
+
+
 
     //go to find friends to pick a friend for a challenge
     public void sendChallenge(View view)
