@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by john on 1/16/16.
@@ -108,6 +109,45 @@ public class Challenge {
         }
 
         return challenges;
+    }
+
+    public static void updateChallenge(OddsAPI api, Challenge challenge)
+    {
+        //Build API call URL
+        StringBuilder urlStr = new StringBuilder();
+        urlStr.append(api.getURL());
+        urlStr.append("Challenge/challenges");
+
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("challenger", Integer.toString(challenge.getChallenger()));
+        params.put("challengee", Integer.toString(challenge.getChallengee()));
+        params.put("valRange", Integer.toString(challenge.getValRange()));
+        params.put("challengerVal", Integer.toString(challenge.getChallengerVal()));
+        params.put("challengeeVal", Integer.toString(challenge.getChallengeeVal()));
+        params.put("challengeDesc", challenge.getChallengeDesc());
+        params.put("status", challenge.getStatus());
+
+        OddsAPI.POST(urlStr.toString(), params);
+    }
+
+
+    public static void createChallenge(OddsAPI api, int challenger, int challengee, int valRange, int challengerVal, int challengeeVal, String challengeDesc, String status)
+    {
+        //Build API call URL
+        StringBuilder urlStr = new StringBuilder();
+        urlStr.append(api.getURL());
+        urlStr.append("Challenge/challenges");
+
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("challenger", Integer.toString(challenger));
+        params.put("challengee", Integer.toString(challengee));
+        params.put("valRange", Integer.toString(valRange));
+        params.put("challengerVal", Integer.toString(challengerVal));
+        params.put("challengeeVal", Integer.toString(challengeeVal));
+        params.put("challengeDesc", challengeDesc);
+        params.put("status", status);
+
+        OddsAPI.POST(urlStr.toString(), params);
     }
 
     public int getId() {
