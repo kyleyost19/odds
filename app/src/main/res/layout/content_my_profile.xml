@@ -9,21 +9,50 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_my_profile" tools:context="com.example.kyle.firstpick.MyProfile">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Send Challenge"
-        android:id="@+id/send_challenge"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="97dp"
-        android:onClick="sendChallenge"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/pro_pic"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="97dp" />
+        android:weightSum="1">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/pro_pic"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.57" />
+
+        <TextView
+            android:layout_width="251dp"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:text="Look it's me!"
+            android:id="@+id/textViewUsername"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.04"
+            android:gravity="center" />
+
+        <Button
+            android:layout_width="197dp"
+            android:layout_height="wrap_content"
+            android:text="Find User/Challenge"
+            android:id="@+id/buttonFindUser"
+            android:onClick="sendChallenge"
+            android:layout_gravity="center_horizontal" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="247dp"
+            android:id="@+id/scrollView"
+            android:layout_gravity="center_horizontal" >
+
+            <LinearLayout
+                android:id="@+id/scroller"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 </RelativeLayout>

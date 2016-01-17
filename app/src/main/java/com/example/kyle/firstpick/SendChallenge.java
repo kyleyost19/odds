@@ -44,6 +44,7 @@ public class SendChallenge extends AppCompatActivity {
         //send a challenge with the sender info the receiver info and the text from the input field
 
         Intent intent = new Intent(this, MyProfile.class);
+        intent.putExtra("user_name", "");
         startActivity(intent);
     }
 
