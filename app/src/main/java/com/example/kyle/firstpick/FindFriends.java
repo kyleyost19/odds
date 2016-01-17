@@ -82,7 +82,7 @@ public class FindFriends extends AppCompatActivity {
 
         new GraphRequest(
                 AccessToken.getCurrentAccessToken(),
-                "/me/taggable_friends?limit=500",
+                "/me/friends",
                 null,
                 HttpMethod.GET,
                 new GraphRequest.Callback() {

@@ -6,4 +6,9 @@
     <string name="title_activity_find_friends">FindFriends</string>
     <string name="title_activity_send_challenge">SendChallenge</string>
     <string name="title_activity_respond_to_challenge">RespondToChallenge</string>
+    <string name="title_activity_other_profile">OtherProfile</string>
+    <string name="title_activity_view_result">ViewResult</string>
+    <string name="title_activity_view_pending">ViewPending</string>
+    <string name="title_activity_last_step">LastStep</string>
+    <string name="title_activity_declined_challenge">DeclinedChallenge</string>
 </resources>

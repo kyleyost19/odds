@@ -48,6 +48,26 @@
         <activity
             android:name=".RespondToChallenge"
             android:label="@string/title_activity_respond_to_challenge"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".OtherProfile"
+            android:label="@string/title_activity_other_profile"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ViewResult"
+            android:label="@string/title_activity_view_result"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ViewPending"
+            android:label="@string/title_activity_view_pending"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".LastStep"
+            android:label="@string/title_activity_last_step"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DeclinedChallenge"
+            android:label="@string/title_activity_declined_challenge"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
