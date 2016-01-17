@@ -2,13 +2,18 @@ package com.example.kyle.firstpick;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
@@ -28,6 +33,7 @@ public class FindFriends extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.scroller);
+        //ListView listView = (ListView) findViewById(R.id.scroll_items);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -42,12 +48,7 @@ public class FindFriends extends AppCompatActivity {
         //get intent and determine what they are doing
         //looking at friends profiles OR picking friend to challenge
         Intent intent = getIntent();
-        //if(intent.getStringExtra("type") == "challenge")
-        //{
-            TextView intentMessage = new TextView(getApplicationContext());
-            intentMessage.setText("Find a Friend to Challenge");
-            linearLayout.addView(intentMessage);
-        //}
+
 
 /*
         new GraphRequest(
@@ -82,7 +83,7 @@ public class FindFriends extends AppCompatActivity {
 
         new GraphRequest(
                 AccessToken.getCurrentAccessToken(),
-                "/me/taggable_friends?limit=500",
+                "/me/friends",
                 null,
                 HttpMethod.GET,
                 new GraphRequest.Callback() {
@@ -98,12 +99,49 @@ public class FindFriends extends AppCompatActivity {
                             linlay.setBackgroundColor(Color.TRANSPARENT);
 
                             //iterate over result set of facebook friends to show
-                            for (int x = 0; x < res.length(); x++) {
+                            for (int x = 0; x < res.length(); x++)
+                            {
+                                LinearLayout HL = new LinearLayout(FindFriends.this);
+                                HL.setOrientation(LinearLayout.HORIZONTAL);
+                                HL.setBackgroundColor(Color.LTGRAY);
+                                HL.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                                        LinearLayout.LayoutParams.WRAP_CONTENT));
+
+                                //create textview
                                 TextView textView = new TextView(FindFriends.this);
                                 JSONObject temp = res.getJSONObject(x);
-                                String name = temp.getString("name");
+                                final String name = temp.getString("name");
                                 textView.setText(name);
-                                linlay.addView(textView);
+                                textView.setTypeface(null, Typeface.BOLD);
+                                textView.setGravity(Gravity.LEFT);
+                                HL.addView(textView);
+
+                                //add button to challenge person
+                                Button btn = new Button(FindFriends.this);
+                                btn.setGravity(Gravity.RIGHT);
+                                btn.setText("challenge");
+                                //btn.setBackgroundColor(Color.WHITE);
+
+
+                                HL.addView(btn);
+                                btn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(getApplicationContext(), SendChallenge.class);
+                                        intent.putExtra("name", name);
+                                        startActivity(intent);
+                                    }
+                                });
+
+                                //add onclick event listener
+                                textView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        // TODO Auto-generated method stub
+                                    }
+                                });
+
+                                linlay.addView(HL);
                             }
                         }
                         catch(Exception e)

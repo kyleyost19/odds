@@ -6,4 +6,5 @@
     <string name="title_activity_find_friends">FindFriends</string>
     <string name="title_activity_send_challenge">SendChallenge</string>
     <string name="title_activity_respond_to_challenge">RespondToChallenge</string>
+    <string name="title_activity_friend_profile">FriendProfile</string>
 </resources>
