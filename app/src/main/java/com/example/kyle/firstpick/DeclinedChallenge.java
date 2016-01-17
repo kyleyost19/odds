@@ -9,6 +9,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import oddsapi.Challenge;
+import oddsapi.OddsAPI;
+
 public class DeclinedChallenge extends AppCompatActivity {
 
     @Override
@@ -20,10 +23,15 @@ public class DeclinedChallenge extends AppCompatActivity {
 
         Intent intent = getIntent();
         String challengeID = intent.getStringExtra("challengeID");
-        //Challenge toView = Challenge.searchByID(challengeID);
+
+        //create odds instance
+        OddsAPI oapi = new OddsAPI(getResources().getString(R.string.odds_server), getResources().getString(R.string.api_path));
+
+        //get challenge obj
+        Challenge toView = Challenge.getChallenge(oapi, Integer.parseInt(challengeID));
 
         TextView textViewDecline = (TextView) findViewById(R.id.textViewDecline);
-        //textViewDecline.setText("The challenge: 'What are the odds that you "+ toView.getChallengeDesc +"' was declined");
+        textViewDecline.setText("The challenge: 'What are the odds that you "+ toView.getChallengeDesc() +"' was declined");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

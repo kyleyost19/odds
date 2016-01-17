@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/newOdds.iml" filepath="$PROJECT_DIR$/newOdds.iml" />
       <module fileurl="file://$PROJECT_DIR$/odds_max.iml" filepath="$PROJECT_DIR$/odds_max.iml" />
     </modules>
   </component>

@@ -111,9 +111,11 @@ public class FindFriends extends AppCompatActivity {
                                 TextView textView = new TextView(FindFriends.this);
                                 JSONObject temp = res.getJSONObject(x);
                                 final String name = temp.getString("name");
+                                final String user_id = temp.getString("id");
                                 textView.setText(name);
                                 textView.setTypeface(null, Typeface.BOLD);
                                 textView.setGravity(Gravity.LEFT);
+                                //textView.getLayoutParams().width = 100;
                                 HL.addView(textView);
 
                                 //add button to challenge person
@@ -122,8 +124,12 @@ public class FindFriends extends AppCompatActivity {
                                 btn.setText("challenge");
                                 //btn.setBackgroundColor(Color.WHITE);
 
+                                //set the layout for the button
+                                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                                layoutParams.setMargins(50, 10, 0, 10);
+                                HL.addView(btn, layoutParams);
 
-                                HL.addView(btn);
                                 btn.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
@@ -133,11 +139,16 @@ public class FindFriends extends AppCompatActivity {
                                     }
                                 });
 
-                                //add onclick event listener
+                                //text click goes to friendProfile to view them
                                 textView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
+
                                         // TODO Auto-generated method stub
+                                        Intent intent = new Intent(getApplicationContext(), FriendProfile.class);
+                                        intent.putExtra("name", name);
+                                        intent.putExtra("user_id", user_id);
+                                        startActivity(intent);
                                     }
                                 });
 
@@ -146,7 +157,7 @@ public class FindFriends extends AppCompatActivity {
                         }
                         catch(Exception e)
                         {
-
+                            e.printStackTrace();
                         }
                     }
                 }
