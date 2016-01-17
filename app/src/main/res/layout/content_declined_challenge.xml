@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:textSize="34sp"
         android:text="The challenge: 'What are the odds that you *insert challenge*' was declined"
-        android:id="@+id/textView2"
+        android:id="@+id/textViewDecline"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"

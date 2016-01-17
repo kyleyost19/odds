@@ -75,7 +75,6 @@ public class MyProfile extends AppCompatActivity {
     {
         Intent intent = new Intent(getApplicationContext(), FindFriends.class);
         //intent.putExtra("user_name", user_id);
-        intent.putExtra("type", "challenge");
         startActivity(intent);
     }
 
