@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 
 /**
  * Created by john on 1/16/16.
@@ -93,8 +94,35 @@ public class User {
         return new User(id, name, FbID);
     }
 
-    public static void saveUser(OddsAPI api, User user)
+    public static User updateUser(OddsAPI api, User user)
     {
+        //Build API call URL
+        StringBuilder urlStr = new StringBuilder();
+        urlStr.append(api.getURL());
+        urlStr.append("User/users");
 
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("name", user.getName());
+        params.put("id", Integer.toString(user.getID()));
+        params.put("facebook_id", Integer.toString(user.getFbID()));
+
+        OddsAPI.POST(urlStr.toString(), params);
+        return user;
+    }
+
+    public static User createUser(OddsAPI api, String name, int FbID)
+    {
+        //Build API call URL
+        StringBuilder urlStr = new StringBuilder();
+        urlStr.append(api.getURL());
+        urlStr.append("User/users");
+
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("name", name);
+        params.put("facebook_id", Integer.toString(FbID));
+
+        OddsAPI.POST(urlStr.toString(), params);
+
+        return getUserByFbID(api, FbID);
     }
 }
