@@ -1,5 +1,6 @@
 package oddsapi;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -99,6 +100,42 @@ public class OddsAPI {
         try
         {
             obj = new JSONObject(json);
+        }
+        catch(JSONException e)
+        {
+
+        }
+
+        return obj;
+    }
+
+    public static JSONArray GETArray(String URL)
+    {
+        String json = "";
+        JSONArray obj = null;
+        HttpURLConnection urlConnection = null;
+        try
+        {
+            java.net.URL url = new URL(URL);
+            urlConnection = (HttpURLConnection) url.openConnection();
+
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            json = OddsAPI.convertStreamToString(in);
+        }
+        catch(IOException e)
+        {
+
+        }
+        finally
+        {
+            if(urlConnection != null)
+            {
+                urlConnection.disconnect();
+            }
+        }
+        try
+        {
+            obj = new JSONArray(json);
         }
         catch(JSONException e)
         {
