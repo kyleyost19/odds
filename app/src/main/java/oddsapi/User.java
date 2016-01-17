@@ -67,4 +67,34 @@ public class User {
 
         return new User(id, name, FbID);
     }
+
+    public static User getUser(OddsAPI api, int id)
+    {
+        int FbID = 0;
+        String name = "";
+
+        //Build API call URL
+        StringBuilder urlStr = new StringBuilder();
+        urlStr.append(api.getURL());
+        urlStr.append("User/users/id/" + id);
+
+        JSONObject obj = OddsAPI.GET(urlStr.toString());
+
+        try
+        {
+            FbID = obj.getInt("facebook_id");
+            name = obj.getString("name");
+        }
+        catch(JSONException e)
+        {
+
+        }
+
+        return new User(id, name, FbID);
+    }
+
+    public static void saveUser(OddsAPI api, User user)
+    {
+
+    }
 }
