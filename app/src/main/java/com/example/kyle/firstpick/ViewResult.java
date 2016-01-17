@@ -9,6 +9,9 @@ import android.view.View;
 import android.content.Intent;
 import android.widget.TextView;
 
+import oddsapi.OddsAPI;
+import oddsapi.User;
+
 public class ViewResult extends AppCompatActivity {
 
     @Override
@@ -24,7 +27,9 @@ public class ViewResult extends AppCompatActivity {
         String challengeID = intent.getStringExtra("challengeID");
         String myName = intent.getStringExtra("myName");
 
-
+        OddsAPI myOddsAPI = new OddsAPI(getResources().getString(R.string.odds_server),
+                getResources().getString(R.string.api_path));
+        User challenger = User.getUser(myOddsAPI, -1);
 
         /*
         Challenge toView = Challenge.searchByID(challengeID);
