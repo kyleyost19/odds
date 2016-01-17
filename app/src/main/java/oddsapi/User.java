@@ -20,9 +20,9 @@ import java.util.HashMap;
 public class User {
     private int id;
     private String name;
-    private int facebook_id;
+    private String facebook_id;
 
-    public User(int id, String name, int facebook_id)
+    public User(int id, String name, String facebook_id)
     {
         this.id = id;
         this.name = name;
@@ -39,12 +39,12 @@ public class User {
         return  this.name;
     }
 
-    public int getFbID()
+    public String getFbID()
     {
         return this.facebook_id;
     }
 
-    public static User getUserByFbID(OddsAPI api, int FbID)
+    public static User getUserByFbID(OddsAPI api, String FbID)
     {
         int id = 0;
         String name = "";
@@ -71,7 +71,7 @@ public class User {
 
     public static User getUser(OddsAPI api, int id)
     {
-        int FbID = 0;
+        String FbID = "";
         String name = "";
 
         //Build API call URL
@@ -83,7 +83,7 @@ public class User {
 
         try
         {
-            FbID = obj.getInt("facebook_id");
+            FbID = obj.getString("facebook_id");
             name = obj.getString("name");
         }
         catch(JSONException e)
@@ -104,13 +104,13 @@ public class User {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("name", user.getName());
         params.put("id", Integer.toString(user.getID()));
-        params.put("facebook_id", Integer.toString(user.getFbID()));
+        params.put("facebook_id", user.getFbID());
 
         OddsAPI.POST(urlStr.toString(), params);
         return user;
     }
 
-    public static User createUser(OddsAPI api, String name, int FbID)
+    public static User createUser(OddsAPI api, String name, String FbID)
     {
         //Build API call URL
         StringBuilder urlStr = new StringBuilder();
@@ -119,7 +119,7 @@ public class User {
 
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("name", name);
-        params.put("facebook_id", Integer.toString(FbID));
+        params.put("facebook_id", FbID);
 
         OddsAPI.POST(urlStr.toString(), params);
 
