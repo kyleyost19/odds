@@ -8,8 +8,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by john on 1/16/16.
@@ -101,5 +106,56 @@ public class OddsAPI {
         }
 
         return obj;
+    }
+
+    public static void POST(String URL, HashMap<String, String> params)
+    {
+        String query;
+        JSONObject obj = new JSONObject(params);
+        java.net.URL url = null;
+        try
+        {
+            url = new URL(URL);
+            query = getQuery(params);
+
+            byte[] postDataBytes = query.toString().getBytes("UTF-8");
+
+            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+            conn.setDoOutput(true);
+            conn.getOutputStream().write(postDataBytes);
+
+            /*
+            Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+            for ( int c = in.read(); c != -1; c = in.read() )
+                System.out.print((char)c);
+            */
+        }
+        catch(Exception e)
+        {
+        }
+
+    }
+
+    private static String getQuery(HashMap<String, String> params) throws UnsupportedEncodingException
+    {
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
+
+        for (Map.Entry<String, String> entry : params.entrySet())
+        {
+            if (first)
+                first = false;
+            else
+                result.append("&");
+
+            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
+            result.append("=");
+            result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+        }
+
+        return result.toString();
     }
 }
