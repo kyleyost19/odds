@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 
 /**
  * Created by john on 1/16/16.
@@ -19,9 +20,9 @@ import java.net.URL;
 public class User {
     private int id;
     private String name;
-    private int facebook_id;
+    private String facebook_id;
 
-    public User(int id, String name, int facebook_id)
+    public User(int id, String name, String facebook_id)
     {
         this.id = id;
         this.name = name;
@@ -38,12 +39,12 @@ public class User {
         return  this.name;
     }
 
-    public int getFbID()
+    public String getFbID()
     {
         return this.facebook_id;
     }
 
-    public static User getUserByFbID(OddsAPI api, int FbID)
+    public static User getUserByFbID(OddsAPI api, String FbID)
     {
         int id = 0;
         String name = "";
@@ -70,7 +71,7 @@ public class User {
 
     public static User getUser(OddsAPI api, int id)
     {
-        int FbID = 0;
+        String FbID = "";
         String name = "";
 
         //Build API call URL
@@ -82,7 +83,7 @@ public class User {
 
         try
         {
-            FbID = obj.getInt("facebook_id");
+            FbID = obj.getString("facebook_id");
             name = obj.getString("name");
         }
         catch(JSONException e)
@@ -93,8 +94,35 @@ public class User {
         return new User(id, name, FbID);
     }
 
-    public static void saveUser(OddsAPI api, User user)
+    public static User updateUser(OddsAPI api, User user)
     {
+        //Build API call URL
+        StringBuilder urlStr = new StringBuilder();
+        urlStr.append(api.getURL());
+        urlStr.append("User/users");
 
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("name", user.getName());
+        params.put("id", Integer.toString(user.getID()));
+        params.put("facebook_id", user.getFbID());
+
+        OddsAPI.POST(urlStr.toString(), params);
+        return user;
+    }
+
+    public static User createUser(OddsAPI api, String name, String FbID)
+    {
+        //Build API call URL
+        StringBuilder urlStr = new StringBuilder();
+        urlStr.append(api.getURL());
+        urlStr.append("User/users");
+
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("name", name);
+        params.put("facebook_id", FbID);
+
+        OddsAPI.POST(urlStr.toString(), params);
+
+        return getUserByFbID(api, FbID);
     }
 }
