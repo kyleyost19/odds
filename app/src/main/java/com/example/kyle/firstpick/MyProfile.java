@@ -59,7 +59,7 @@ public class MyProfile extends AppCompatActivity {
 
         }
 
-
+        //Get the ArrayList of challenges for the given user
 
             //use this data to get user record from database and
             //

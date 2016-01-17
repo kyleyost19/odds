@@ -8,4 +8,10 @@
     <string name="title_activity_respond_to_challenge">RespondToChallenge</string>    
     <string name="odds_server">http://23.96.44.171/</string>
     <string name="api_path">index.php/api/</string>
+    <string name="title_activity_other_profile">OtherProfile</string>
+    <string name="title_activity_view_result">ViewResult</string>
+    <string name="title_activity_view_pending">ViewPending</string>
+    <string name="title_activity_last_step">LastStep</string>
+    <string name="title_activity_declined_challenge">DeclinedChallenge</string>
+    <string name="title_activity_friend_profile">FriendProfile</string>
 </resources>
