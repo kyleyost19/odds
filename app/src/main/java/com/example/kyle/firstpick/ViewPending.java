@@ -9,6 +9,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import oddsapi.Challenge;
+import oddsapi.OddsAPI;
+import oddsapi.User;
+
 public class ViewPending extends AppCompatActivity {
 
     @Override
@@ -23,18 +27,43 @@ public class ViewPending extends AppCompatActivity {
         Intent intent = getIntent();
         String challengeID = intent.getStringExtra("challengeID");
         String myName = intent.getStringExtra("myName");
-        /*
-        Challenge toView = Challenge.searchByID(challengeID);
-        if(toView.getChallenger().equals(myName)){
-            resultString+=toView.getChallengee();
-        }
-        else{
-            resultString+=toView.getChallenger();
-        }
-        */
-        resultString += " has not yet responded to the challenge 'What are the odds that you ";
+
+        //create odds instance
+        OddsAPI oapi = new OddsAPI(getResources().getString(R.string.odds_server), getResources().getString(R.string.api_path));
+
+        //get challenge obj
+        Challenge toView = Challenge.getChallenge(oapi, Integer.parseInt(challengeID));
+
+        //find out challenger name
+        String challenger = (User.getUser(oapi, toView.getChallenger())).getName();
+        String challengee = (User.getUser(oapi, toView.getChallengee())).getName();
+        resultString += challenger;
+        resultString += " challenged ";
+        resultString += challengee;
+        resultString += ": What are the odds ";
+        resultString += toView.getChallengeDesc();
         //resultString += toView.getChallengeDesc();
-        resultString += "'";
+
+        if(toView.getChallengerVal() == 0)      //challenger has not responded
+        {
+            resultString += "\n" + challenger + " has not given a value." + "\n";
+        }
+        else
+        {
+            resultString += "\n" + challenger + " value: " + Integer.toString(toView.getChallengerVal()) + "\n";
+        }
+
+        if(toView.getChallengeeVal() == 0)      //challengee has not resonded
+        {
+            resultString += "\n" + challengee + " has not given a value." + "\n";
+        }
+        else
+        {
+            resultString += "\n" + challengee + " value: " + Integer.toString(toView.getChallengeeVal()) + "\n";
+        }
+
+
+        resultString += "";
         TextView textViewPending = (TextView) findViewById(R.id.textViewPending);
         textViewPending.setText(resultString);
 

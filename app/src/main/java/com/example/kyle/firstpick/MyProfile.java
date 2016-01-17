@@ -58,16 +58,9 @@ public class MyProfile extends AppCompatActivity {
 
 
         }
-
-
-
             //use this data to get user record from database and
             //
     }
-
-
-
-
 
 
     //go to find friends to pick a friend for a challenge
